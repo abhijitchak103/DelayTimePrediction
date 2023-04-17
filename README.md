@@ -1,2 +1,2 @@
-# Delay Time Prediction Linear Regression Project
+# Delivery Time Prediction Linear Regression Project
 

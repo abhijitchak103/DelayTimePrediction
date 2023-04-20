@@ -1,0 +1,9 @@
+pandas
+datetime
+numpy
+matplotlib
+seaborn
+scikit-learn
+Flask
+
+-e .

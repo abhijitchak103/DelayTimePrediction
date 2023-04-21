@@ -1,5 +1,5 @@
 import math
-import os, sys
+import os, sys, pickle
 from logger import logging
 from exception import CustomException
 
@@ -236,3 +236,17 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
     except Exception as e:
         logging.info('Error Occcured in utils.preprocess_df')
         raise CustomException
+    
+
+def save_object(file_path, obj):
+    try:
+        dir_path = os.path.dirname(file_path)
+
+        os.makedirs(dir_path, exist_ok=True)
+
+        with open(file_path, 'wb') as path:
+            pickle.dump(obj, path)
+
+    except Exception as e:
+        logging.info('Error occured in save_object')
+        raise CustomException(e, sys)

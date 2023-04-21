@@ -232,11 +232,44 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
         df.drop(columns = 'Delivery_person_ID', axis = 1, inplace = True)
         logging.info('Created City feature for City of Order. Dropped Delivery_person_ID')
 
+        df = get_dummies_df(df)
+        logging.info('Created Dummies for Categorical Columns')
+
         return df
     except Exception as e:
         logging.info('Error Occcured in utils.preprocess_df')
         raise CustomException
     
+
+def get_dummies_df(df: pd.DataFrame) -> pd.DataFrame:
+    try:
+        festival = {'No': 0, 'Yes': 1}
+        months = {1: 'Jan',
+                2: 'Feb',
+                3: 'Mar',
+                4: 'Apr',
+                5: 'May',
+                6: 'Jun',
+                7: 'Jul',
+                8: 'Aug',
+                9: 'Sep',
+                10: 'Oct',
+                11: 'Nov',
+                12: 'Dec'}
+
+        df.replace({"Festival": festival}, inplace=True)
+        df.replace({"Month": months}, inplace=True)
+
+        cat_columns = ['Weather_conditions', 'Road_traffic_density', 'Type_of_order', 
+                    'Type_of_vehicle', 'City', 'Time_of_Day_Ordered', 'Month']
+
+        df = pd.get_dummies(df, columns=cat_columns, dtype=float)
+
+        return df
+    except Exception as e:
+        logging.info('Error occured in utils.reorganize_df')
+        raise CustomException(e, sys)
+
 
 def save_object(file_path, obj):
     try:

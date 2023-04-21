@@ -1,7 +1,7 @@
 import os, sys
 from src.logger import logging
 from src.exception import CustomException
-from src.utils import getDistancefromLatLonginKm
+from src.utils import preprocess_df
 
 import pandas as pd
 import numpy as np
@@ -26,17 +26,15 @@ class DataIngestion:
         try:
             df = pd.read_csv(os.path.join('notebooks/data', 'data.csv'))
             logging.info('Read csv file as pandas.DataFrame')
-            
-            df.drop(columns='ID', axis=1, inplace=True)
-            logging.info('Dropped ID column')
 
-            df['Delivery_distance'] = df.apply(
-            lambda x: getDistancefromLatLonginKm(x['Restaurant_latitude'], 
-                                                 x['Restaurant_longitude'], 
-                                                 x['Delivery_location_latitude'], 
-                                                 x['Delivery_location_longitude']), axis=1)
-            logging.info("Created Column 'Delivery_distance'")
+            logging.info('Preprocessing Data started')
+            df = preprocess_df(df=df)
+            logging.info('Successfully preprocessed DataFrame')
+
             
+            
+
+
         except Exception as e:
             logging.info('Error occured in DataIngestion.initiate_data_ingestion')
             raise CustomException(e, sys)

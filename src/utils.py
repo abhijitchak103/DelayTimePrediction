@@ -232,9 +232,6 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
         df.drop(columns = 'Delivery_person_ID', axis = 1, inplace = True)
         logging.info('Created City feature for City of Order. Dropped Delivery_person_ID')
 
-        df = get_dummies_df(df)
-        logging.info('Created Dummies for Categorical Columns')
-
         return df
     except Exception as e:
         logging.info('Error Occcured in utils.preprocess_df')

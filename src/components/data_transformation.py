@@ -76,12 +76,18 @@ class DataTransformation:
 
             logging.info(f"Training dataset head: \n{train_df.head().to_string()}")
             logging.info(f"Test dataset head: \n{test_df.head().to_string()}")
+            # logging.info(f"Unique values in Month in train: \n{train_df.Month.unique()}")
+            # logging.info(f"Unique values in Month in test: \n{test_df.Month.unique()}")
 
             train_df = get_dummies_df(train_df)
             logging.info('Created Dummies for Categorical Columns in Training Data')
+            # logging.info(f"Training data head after dummies: \n{train_df.head().to_string()}")
+            # logging.info(f"No of columns of training dataframe: {train_df.shape[1]}")
 
             test_df = get_dummies_df(test_df)
             logging.info('Created Dummies for Categorical Columns in Test Data')
+            # logging.info(f"Test data head after dummies: \n{test_df.head().to_string()}")
+            # logging.info(f"No of columns of test dataframe: {test_df.shape[1]}")
 
             logging.info('Obtaining Preprocessor Object')
             preprocessor_obj = self.get_data_transformation_obj()

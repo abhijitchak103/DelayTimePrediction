@@ -60,7 +60,7 @@ def get_distance_from_latlong_in_km(lat1, lon1, lat2, lon2):
         raise CustomException(e, sys)
     
 
-def preprocess_date_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
+def preprocess_date_columns(df: pd.DataFrame) -> pd.DataFrame:
     """
     Cleans the input pd.DataFrame columns and returns the updated pd.DataFrame
     -----------------------------------------
@@ -68,7 +68,7 @@ def preprocess_date_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     Arguments:
     ----------
     df: Pandas DataFrame
-    columns: Columns to Clean
+
     -----------------------------------------
 
     Returns:
@@ -76,11 +76,16 @@ def preprocess_date_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     df: Pandas DataFrame
     """
     try:
-        df[columns[0]] = pd.to_datetime(df[columns[0]])
+        order_date = list(df["Order_Date"])
+
+        order_date = [x.replace("-", "/") for x in order_date]
+
+        df["Order_Date"] = order_date
+        df["Order_Date"] = pd.to_datetime(df["Order_Date"], dayfirst=True)
         logging.info('Changed Order_Date to datetime object')
 
-        time_ordered = list(df[columns[1]])
-        time_picked = list(df[columns[2]])
+        time_ordered = list(df["Time_Orderd"])
+        time_picked = list(df["Time_Order_picked"])
 
         df['Time_Orderd_num'] = transform_time_columns(time_ordered)
         df['Time_Order_picked_num'] = transform_time_columns(time_picked)
@@ -98,8 +103,8 @@ def preprocess_date_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
         df.drop(columns = ['Time_Orderd_num', 'Time_Order_picked_num', 'Time_Order_picked'], axis = 1, inplace = True)
         logging.info('Dropped temporary columns and Time_Order_picked column')
 
-        df['Month'] = df[columns[0]].dt.month
-        df.drop(columns = columns[0], axis = 1, inplace = True)
+        df['Month'] = df["Order_Date"].dt.month
+        df.drop(columns = "Order_Date", axis = 1, inplace = True)
         logging.info('Created new Month feature from Order_Date and dropped Order_Date')
 
         return df
@@ -218,7 +223,7 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
         logging.info("Removed outliers from 'Delivery_distance'")
 
         logging.info('Preprocessing df to clean Datetime columns')
-        df = preprocess_date_columns(df=df, columns=['Order_Date', 'Time_Orderd', 'Time_Order_picked'])
+        df = preprocess_date_columns(df)
         logging.info('Preprocessing df completed')
 
 

@@ -235,7 +235,7 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
         return df
     except Exception as e:
         logging.info('Error Occcured in utils.preprocess_df')
-        raise CustomException
+        raise CustomException(e, sys)
     
 
 def get_dummies_df(df: pd.DataFrame) -> pd.DataFrame:

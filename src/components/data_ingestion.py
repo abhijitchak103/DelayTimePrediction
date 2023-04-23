@@ -26,10 +26,12 @@ class DataIngestion:
         try:
             df = pd.read_csv(os.path.join('notebooks/data', 'data.csv'))
             logging.info('Read csv file as pandas.DataFrame')
+            # df.to_csv('test.csv')
 
             logging.info('Preprocessing Data started')
             df = preprocess_df(df=df)
             logging.info('Successfully preprocessed DataFrame')
+            # logging.info(f'Month unique values: \n{df.Month.unique()}')
 
             os.makedirs(os.path.dirname(self.data_ingestion_config.raw_data_path), exist_ok=True)
             df.to_csv(self.data_ingestion_config.raw_data_path, index=False)

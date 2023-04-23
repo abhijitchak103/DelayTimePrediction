@@ -26,7 +26,7 @@ class DataTransformation:
 
     def get_data_transformation_obj(self):
         try:
-            logging.info('Data Transfromation Started')
+            logging.info('Data Transformation Started')
 
             numerical_columns = ['Delivery_person_Age', 'Delivery_person_Ratings', 'Vehicle_condition',
                                  'multiple_deliveries', 'Festival', 'Delivery_distance', 'Time_to_pick', 
@@ -40,8 +40,7 @@ class DataTransformation:
                                  'City_HYD', 'City_INDO', 'City_JAP', 'City_KNP', 'City_KOC', 'City_KOL', 'City_LUDH', 
                                  'City_MUM', 'City_MYS', 'City_PUNE', 'City_RANCHI', 'City_SUR', 'City_VAD', 
                                  'Time_of_Day_Ordered_Evening', 'Time_of_Day_Ordered_Morning', 'Time_of_Day_Ordered_Night', 
-                                 'Month_Apr', 'Month_Aug', 'Month_Dec', 'Month_Feb', 'Month_Jan', 'Month_Jul', 'Month_Jun', 
-                                 'Month_Mar', 'Month_May', 'Month_Nov', 'Month_Oct', 'Month_Sep']
+                                 'Month_Apr', 'Month_Feb', 'Month_Mar']
 
             logging.info('Defining Numerical Pipeline')
             numerical_pipeline = Pipeline(

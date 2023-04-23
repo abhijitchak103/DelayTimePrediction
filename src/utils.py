@@ -1,5 +1,7 @@
 import math
 import os, sys, pickle
+
+from datetime import datetime as dt
 from src.logger import logging
 from src.exception import CustomException
 
@@ -90,6 +92,7 @@ def preprocess_date_columns(df: pd.DataFrame) -> pd.DataFrame:
         df['Time_Orderd_num'] = transform_time_columns(time_ordered)
         df['Time_Order_picked_num'] = transform_time_columns(time_picked)
         logging.info('Created temporary numerical columns from Time_orderd and Time_Order_picked')
+        # logging.info(f'Month unique values: \n{df.Month.unique()}')
 
         df = df.mask(df == '')
         df.dropna(axis=0, inplace=True)
@@ -104,6 +107,11 @@ def preprocess_date_columns(df: pd.DataFrame) -> pd.DataFrame:
         logging.info('Dropped temporary columns and Time_Order_picked column')
 
         df['Month'] = df["Order_Date"].dt.month
+        # test_path = os.path.join('artifacts', 'test.csv')
+        # df.to_csv('test.csv')
+
+        logging.info(f'Month unique values: \n{df.Month.unique()}')
+
         df.drop(columns = "Order_Date", axis = 1, inplace = True)
         logging.info('Created new Month feature from Order_Date and dropped Order_Date')
 
@@ -225,7 +233,10 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
         logging.info('Preprocessing df to clean Datetime columns')
         df = preprocess_date_columns(df)
         logging.info('Preprocessing df completed')
+        # logging.info(f'Month unique values before: \n{df.Month.unique()}')
 
+        df = replace_column_data(df=df)
+        logging.info('Replaced Festival and Month column data')
 
         df = get_part_of_day(df=df, column='Time_Orderd')
         logging.info('Created Time_of_day_Ordered feature and dropped Time_Orderd')
@@ -319,4 +330,21 @@ def load_object(file_path):
             return pickle.load(f)
     except Exception as e:
         logging.info('Error occured in utils.load_object')
+        raise CustomException(e, sys)
+    
+
+def replace_column_data(df: pd.DataFrame) -> pd.DataFrame:
+    try:
+        festival = {'No': 0, 'Yes': 1}
+        months = {2: 'Feb',
+                3: 'Mar',
+                4: 'Apr'
+                }
+
+        df.replace({"Festival": festival}, inplace=True)
+        df.replace({"Month": months}, inplace=True)
+
+        return df
+    except Exception as e:
+        logging.info('Error occured in utils.replace_column_data')
         raise CustomException(e, sys)

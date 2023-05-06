@@ -211,6 +211,7 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
     df: pd.DataFrame
     """
     try:
+        logging.info("Preprocess started.")
         df.drop(columns='ID', axis=1, inplace=True)
         logging.info('Dropped ID column')
 
@@ -232,7 +233,6 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
 
         logging.info('Preprocessing df to clean Datetime columns')
         df = preprocess_date_columns(df)
-        logging.info('Preprocessing df completed')
         # logging.info(f'Month unique values before: \n{df.Month.unique()}')
 
         df = replace_column_data(df=df)
@@ -241,12 +241,14 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
         df = get_part_of_day(df=df, column='Time_Orderd')
         logging.info('Created Time_of_day_Ordered feature and dropped Time_Orderd')
 
-        cities = list(df['Delivery_person_ID'])
-        cities = [x[:x.find('RES')] for x in cities]
+        # cities = list(df['Delivery_person_ID'])
+        # cities = [x[:x.find('RES')] for x in cities]
 
-        df['City'] = cities
+        # df['City'] = cities
         df.drop(columns = 'Delivery_person_ID', axis = 1, inplace = True)
-        logging.info('Created City feature for City of Order. Dropped Delivery_person_ID')
+        logging.info('Dropped Delivery_person_ID')
+
+        logging.info('Preprocessing df completed')
 
         return df
     except Exception as e:
@@ -256,22 +258,7 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
 
 def get_dummies_df(df: pd.DataFrame) -> pd.DataFrame:
     try:
-        festival = {'No': 0, 'Yes': 1}
-        months = {1: 'Jan',
-                2: 'Feb',
-                3: 'Mar',
-                4: 'Apr',
-                5: 'May',
-                6: 'Jun',
-                7: 'Jul',
-                8: 'Aug',
-                9: 'Sep',
-                10: 'Oct',
-                11: 'Nov',
-                12: 'Dec'}
-
-        df.replace({"Festival": festival}, inplace=True)
-        df.replace({"Month": months}, inplace=True)
+        # df = replace_column_data(df=df)
 
         cat_columns = ['Weather_conditions', 'Road_traffic_density', 'Type_of_order', 
                     'Type_of_vehicle', 'City', 'Time_of_Day_Ordered', 'Month']
@@ -280,7 +267,7 @@ def get_dummies_df(df: pd.DataFrame) -> pd.DataFrame:
 
         return df
     except Exception as e:
-        logging.info('Error occured in utils.reorganize_df')
+        logging.info('Error occured in utils.get_dummies_df')
         raise CustomException(e, sys)
 
 

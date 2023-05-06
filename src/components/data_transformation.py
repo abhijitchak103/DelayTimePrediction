@@ -35,12 +35,9 @@ class DataTransformation:
                                  'Road_traffic_density_High', 'Road_traffic_density_Jam', 'Road_traffic_density_Low', 
                                  'Road_traffic_density_Medium', 'Type_of_order_Buffet', 'Type_of_order_Drinks', 
                                  'Type_of_order_Meal', 'Type_of_order_Snack', 'Type_of_vehicle_electric_scooter', 
-                                 'Type_of_vehicle_motorcycle', 'Type_of_vehicle_scooter', 'City_AGR', 'City_ALH', 
-                                 'City_AURG', 'City_BANG', 'City_BHP', 'City_CHEN', 'City_COIMB', 'City_DEH', 'City_GOA', 
-                                 'City_HYD', 'City_INDO', 'City_JAP', 'City_KNP', 'City_KOC', 'City_KOL', 'City_LUDH', 
-                                 'City_MUM', 'City_MYS', 'City_PUNE', 'City_RANCHI', 'City_SUR', 'City_VAD', 
-                                 'Time_of_Day_Ordered_Evening', 'Time_of_Day_Ordered_Morning', 'Time_of_Day_Ordered_Night', 
-                                 'Month_Apr', 'Month_Feb', 'Month_Mar']
+                                 'Type_of_vehicle_motorcycle', 'Type_of_vehicle_scooter', 'City_Metropolitian', 'City_Urban', 
+                                 'City_Semi-Urban', 'Time_of_Day_Ordered_Evening', 'Time_of_Day_Ordered_Morning', 
+                                 'Time_of_Day_Ordered_Night']
 
             logging.info('Defining Numerical Pipeline')
             numerical_pipeline = Pipeline(

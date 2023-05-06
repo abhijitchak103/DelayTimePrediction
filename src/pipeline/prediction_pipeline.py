@@ -6,12 +6,12 @@ from src.logger import logging
 from src.utils import load_object
 
 
-class PredictionPipeline:
+class PredictPipeline:
     def __init__(self) -> None:
         pass
 
 
-    def predict(self, features):
+    def predict_data(self, features):
         try:
             preprocessor_path = os.path.join('artifacts', 'preprocessor.pkl')
             model_path = os.path.join('artifacts', 'model.pkl')
@@ -33,7 +33,7 @@ class CustomData:
                  Delivery_person_Age: int, 
                  Delivery_person_Ratings: float, 
                  Vehicle_condition: int,
-                 multiple_deliveries: int, 
+                 multiple_deliveries: float, 
                  Festival: int, 
                  Delivery_distance: float, 
                  Time_to_pick: float, 

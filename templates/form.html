@@ -1,0 +1,115 @@
+<html>
+<body>
+<form action="{{url_for('predict_datapoint')}}" method="POST">
+
+    <div class="form-group">
+        <label for="Delivery_person_Age">Delivery person age:</label>
+        <input type="text" id="Delivery_person_Age" name="Delivery_person_Age" placeholder="25">
+    </div>
+
+    <div class="form-group">
+        <label for="Delivery_person_Ratings">Delivery person ratings:</label>
+        <input type="text" id="Delivery_person_Ratings" name="Delivery_person_Ratings" placeholder="4">
+    </div>
+  
+    <div class="form-group">
+        <label for="Delivery_distance">Delivery distance:</label>
+        <input type="text" id="Delivery_distance" name="Delivery_distance" placeholder="10">
+    </div>         
+  
+    <div class="form-group">
+        <label for="Time_to_pick">Time to pick:</label>
+        <input type="text" id="Time_to_pick" name="Time_to_pick" placeholder="10">
+    </div>  
+
+    <div class="form-group">
+        <label for="Festival">Festival:</label>
+        <select id="Festival" name="Festival">
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="Vehicle_condition">Vehicle condition:</label>
+        <select id="Vehicle_condition" name="Vehicle_condition">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+      </div>   
+
+    <div class="form-group">
+        <label for="Weather_conditions">Weather conditions:</label>
+        <select id="Weather_conditions" name="Weather_conditions">
+            <option value="Fog">Fog</option>
+            <option value="Stormy">Stormy</option>
+            <option value="Cloudy">Cloudy</option>
+            <option value="Sandstorms">Sandstorms</option>
+            <option value="Windy">Windy</option>
+            <option value="Sunny">Sunny</option>
+        </select>
+    </div>
+  
+    <div class="form-group">
+        <label for="Road_traffic_density">Road Traffic Density:</label>
+        <select id="Road_traffic_density" name="Road_traffic_density">
+            <option value="Low">Low</option>
+            <option value="Jam">Jam</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Type_of_order">Type of Order:</label>
+        <select id="Type_of_order" name="Type_of_order">
+            <option value="Meal">Meal</option>
+            <option value="Snack">Snack</option>
+            <option value="Drinks">Drinks</option>
+            <option value="Buffet">Buffet</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Type_of_vehicle">Type of Vehicle:</label>
+        <select id="Type_of_vehicle" name="Type_of_vehicle">
+            <option value="motorcycle">motorcycle</option>
+            <option value="scooter">scooter</option>
+            <option value="electric_scooter">electric_scooter</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="City">City:</label>
+        <select id="City" name="City">
+            <option value="Metropolitian">Metropolitian</option>
+            <option value="Urban">Urban</option>
+            <option value="Semi-Urban">Semi-Urban</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Time_of_Day_Ordered">Time of Day Ordered:</label>
+        <select id="Time_of_Day_Ordered" name="Time_of_Day_Ordered">
+            <option value="Night">Night</option>
+            <option value="Evening">Evening</option>
+            <option value="Morning">Morning</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="multiple_deliveries">Multiple deliveries:</label>
+        <select id="multiple_deliveries" name="multiple_deliveries">
+            <option value="1.0">1.0</option>
+            <option value="2.0">2.0</option>
+            <option value="3.0">3.0</option>
+            <option value="0.0">0.0</option>
+        </select>
+    </div>
+
+<div style="clear:both;"></div>
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>

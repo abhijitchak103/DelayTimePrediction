@@ -42,4 +42,4 @@ def predict_datapoint():
         return render_template('results.html', final_result=f"{result} minutes")
     
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug = True)
+    app.run(host='0.0.0.0', debug = False)

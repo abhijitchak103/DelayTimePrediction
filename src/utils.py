@@ -236,7 +236,7 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
         # logging.info(f'Month unique values before: \n{df.Month.unique()}')
 
         df = replace_column_data(df=df)
-        logging.info('Replaced Festival and Month column data')
+        logging.info('Replaced Month column data')
 
         df = get_part_of_day(df=df, column='Time_Orderd')
         logging.info('Created Time_of_day_Ordered feature and dropped Time_Orderd')
@@ -256,19 +256,19 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
         raise CustomException(e, sys)
     
 
-def get_dummies_df(df: pd.DataFrame) -> pd.DataFrame:
-    try:
-        # df = replace_column_data(df=df)
+# def get_dummies_df(df: pd.DataFrame) -> pd.DataFrame:
+#     try:
+#         # df = replace_column_data(df=df)
 
-        cat_columns = ['Weather_conditions', 'Road_traffic_density', 'Type_of_order', 
-                    'Type_of_vehicle', 'City', 'Time_of_Day_Ordered', 'Month']
+#         cat_columns = ['Weather_conditions', 'Road_traffic_density', 'Type_of_order', 
+#                     'Type_of_vehicle', 'City', 'Time_of_Day_Ordered', 'Month']
 
-        df = pd.get_dummies(df, columns=cat_columns, dtype=float)
+#         df = pd.get_dummies(df, columns=cat_columns, dtype=float)
 
-        return df
-    except Exception as e:
-        logging.info('Error occured in utils.get_dummies_df')
-        raise CustomException(e, sys)
+#         return df
+#     except Exception as e:
+#         logging.info('Error occured in utils.get_dummies_df')
+#         raise CustomException(e, sys)
 
 
 def save_object(file_path, obj):
@@ -322,13 +322,13 @@ def load_object(file_path):
 
 def replace_column_data(df: pd.DataFrame) -> pd.DataFrame:
     try:
-        festival = {'No': 0, 'Yes': 1}
+        # festival = {'No': 0, 'Yes': 1}
         months = {2: 'Feb',
                 3: 'Mar',
                 4: 'Apr'
                 }
 
-        df.replace({"Festival": festival}, inplace=True)
+        # df.replace({"Festival": festival}, inplace=True)
         df.replace({"Month": months}, inplace=True)
 
         return df

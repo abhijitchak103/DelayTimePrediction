@@ -1,12 +1,12 @@
 import os, sys
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import save_object, get_dummies_df
+from src.utils import save_object
 
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
 import pandas as pd
 import numpy as np
@@ -28,29 +28,43 @@ class DataTransformation:
         try:
             logging.info('Data Transformation Started')
 
-            numerical_columns = ['Delivery_person_Age', 'Delivery_person_Ratings', 'Vehicle_condition',
-                                 'multiple_deliveries', 'Festival', 'Delivery_distance', 'Time_to_pick', 
-                                 'Weather_conditions_Cloudy', 'Weather_conditions_Fog', 'Weather_conditions_Sandstorms',
-                                 'Weather_conditions_Stormy', 'Weather_conditions_Sunny', 'Weather_conditions_Windy', 
-                                 'Road_traffic_density_High', 'Road_traffic_density_Jam', 'Road_traffic_density_Low', 
-                                 'Road_traffic_density_Medium', 'Type_of_order_Buffet', 'Type_of_order_Drinks', 
-                                 'Type_of_order_Meal', 'Type_of_order_Snack', 'Type_of_vehicle_electric_scooter', 
-                                 'Type_of_vehicle_motorcycle', 'Type_of_vehicle_scooter', 'City_Metropolitian', 'City_Urban', 
-                                 'City_Semi-Urban', 'Time_of_Day_Ordered_Evening', 'Time_of_Day_Ordered_Morning', 
-                                 'Time_of_Day_Ordered_Night']
+            numerical_columns = ['Delivery_person_Age', 
+                                 'Delivery_person_Ratings', 
+                                 'Delivery_distance', 
+                                 'Time_to_pick']
 
             logging.info('Defining Numerical Pipeline')
             numerical_pipeline = Pipeline(
                 steps = [
                 ('Imputer', SimpleImputer(strategy='median')),
-                ('Scaler', StandardScaler(with_mean=False))
+                ('Scaler', StandardScaler())
+                ]
+            )
+
+            categorical_columns = ['Festival', 
+                                   'Weather_conditions', 
+                                   'Road_traffic_density', 
+                                   'Type_of_order', 
+                                   'Type_of_vehicle', 
+                                   'City', 
+                                   'Time_of_Day_Ordered', 
+                                   'Month', 
+                                   'multiple_deliveries', 
+                                   'Vehicle_condition']
+
+            logging.info('Defining Categorical Pipeline')
+            categorical_pipeline = Pipeline(
+                steps = [
+                ('Imputer', SimpleImputer(strategy='most_frequent')),
+                ('Encoder', OneHotEncoder(sparse=False, handle_unknown="ignore"))
                 ]
             )
 
             logging.info('Defining Preprocessor')
             preprocessor = ColumnTransformer(
                 [
-                ('Numerical_Pipeline', numerical_pipeline, numerical_columns)
+                ('Numerical_Pipeline', numerical_pipeline, numerical_columns),
+                ('Categorical_Pipeline', categorical_pipeline, categorical_columns)
                 ]
             )
 
@@ -72,29 +86,19 @@ class DataTransformation:
 
             logging.info(f"Training dataset head: \n{train_df.head().to_string()}")
             logging.info(f"Test dataset head: \n{test_df.head().to_string()}")
-            # logging.info(f"Unique values in Month in train: \n{train_df.Month.unique()}")
-            # logging.info(f"Unique values in Month in test: \n{test_df.Month.unique()}")
-
-            train_df = get_dummies_df(train_df)
-            logging.info('Created Dummies for Categorical Columns in Training Data')
-            # logging.info(f"Training data head after dummies: \n{train_df.head().to_string()}")
-            # logging.info(f"No of columns of training dataframe: {train_df.shape[1]}")
-
-            test_df = get_dummies_df(test_df)
-            logging.info('Created Dummies for Categorical Columns in Test Data')
-            # logging.info(f"Test data head after dummies: \n{test_df.head().to_string()}")
-            # logging.info(f"No of columns of test dataframe: {test_df.shape[1]}")
-
+            
             logging.info('Obtaining Preprocessor Object')
             preprocessor_obj = self.get_data_transformation_obj()
 
             target_column = 'Time_taken (min)'
             
             input_feature_train_df = train_df.drop(columns = target_column, axis = 1)
+            logging.info(f"Training input feature dataset head: \n{input_feature_train_df.head().to_string()}")
             target_feature_train_df = train_df[target_column]
 
-            input_feature_test_df = train_df.drop(columns = target_column, axis = 1)
-            target_feature_test_df = train_df[target_column]
+            input_feature_test_df = test_df.drop(columns = target_column, axis = 1)
+            logging.info(f"Test input feature dataset head: \n{input_feature_test_df.head().to_string()}")
+            target_feature_test_df = test_df[target_column]
             
 
             logging.info('Transforming using preprocessor object')

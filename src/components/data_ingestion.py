@@ -40,6 +40,14 @@ class DataIngestion:
 
             logging.info('Train test split Started')
 
+            num_columns = ['Delivery_person_Age', 'Delivery_person_Ratings', 'Delivery_distance', 'Time_to_pick']
+
+            cat_columns = ['Festival', 'Weather_conditions', 'Road_traffic_density', 'Type_of_order', 
+              'Type_of_vehicle', 'City', 'Time_of_Day_Ordered', 'Month', 'multiple_deliveries', 'Vehicle_condition']
+
+            cols = num_columns + cat_columns + ['Time_taken (min)']
+            df = df.loc[:, cols]
+
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=1)
 
             train_set.to_csv(self.data_ingestion_config.train_data_path, header=True, index=False)

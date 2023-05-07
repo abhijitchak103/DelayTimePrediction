@@ -17,11 +17,11 @@ def predict_datapoint():
     
     else:
         data = CustomData(
-            Delivery_person_Age= int(request.form.get('Delivery_person_Age')), 
+            Delivery_person_Age= float(request.form.get('Delivery_person_Age')), 
             Delivery_person_Ratings= float(request.form.get('Delivery_person_Ratings')), 
-            Vehicle_condition= int(request.form.get('Vehicle_condition')),
+            Vehicle_condition= float(request.form.get('Vehicle_condition')),
             multiple_deliveries= float(request.form.get('multiple_deliveries')), 
-            Festival= int(request.form.get('Festival')), 
+            Festival= request.form.get('Festival'), 
             Delivery_distance= float(request.form.get('Delivery_distance')), 
             Time_to_pick= float(request.form.get('Time_to_pick')), 
             Weather_conditions= request.form.get('Weather_conditions'),
@@ -39,7 +39,7 @@ def predict_datapoint():
 
         result = round(pred[0], 2)
 
-        return render_template('results.html', final_result=result)
+        return render_template('results.html', final_result=f"{result} minutes")
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug = True)

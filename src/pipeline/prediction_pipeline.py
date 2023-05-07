@@ -30,11 +30,11 @@ class PredictPipeline:
 
 class CustomData:
     def __init__(self,
-                 Delivery_person_Age: int, 
+                 Delivery_person_Age: float, 
                  Delivery_person_Ratings: float, 
-                 Vehicle_condition: int,
+                 Vehicle_condition: float,
                  multiple_deliveries: float, 
-                 Festival: int, 
+                 Festival: str, 
                  Delivery_distance: float, 
                  Time_to_pick: float, 
                  Weather_conditions: str,

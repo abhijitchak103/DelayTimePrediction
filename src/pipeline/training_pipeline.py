@@ -18,7 +18,7 @@ if __name__ == '__main__':
         test_path=test_data_path
         )
     model_trainer = ModelTrainer()
-    model_trainer.initaite_model_trainer(
+    model_trainer.initiate_model_trainer(
         train_arr=train_arr,
         test_arr=test_arr
         )

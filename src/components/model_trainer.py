@@ -21,7 +21,7 @@ class ModelTrainer:
         self.model_trainer_config = ModelTrainerConfig()
 
 
-    def initaite_model_trainer(self, train_arr, test_arr):
+    def initiate_model_trainer(self, train_arr, test_arr):
         try:
             logging.info('Getting X_train, X_test, y_train, y_test')
             X_train, y_train, X_test, y_test = (

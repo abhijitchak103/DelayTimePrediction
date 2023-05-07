@@ -2,7 +2,10 @@ from flask import Flask, render_template, request
 from src.pipeline.prediction_pipeline import CustomData, PredictPipeline
 
 
-app = Flask(__name__)
+application = Flask(__name__)
+
+
+app = application
 
 
 @app.route('/')
